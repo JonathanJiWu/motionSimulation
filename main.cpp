@@ -47,8 +47,14 @@ std::vector<MotionEvent> Simulate1DMotion
 // 1. Return all events where velocity > threshold
 std::vector<MotionEvent> FilterByVelocity(const std::vector<MotionEvent>& events, double threshold)
 {
+    std::vector<MotionEvent> result;
 
+    std::ranges::copy_if(events, std::back_inserter(result),
+        [threshold](const MotionEvent& ev) {
+            return ev.velocity > threshold;
+        });
 
+    return result;
 }
 
 // 2. Return a new vector sorted by descending |velocity|
